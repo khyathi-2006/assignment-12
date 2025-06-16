@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2f2b2d; /* Matches the dark background of the image */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white; /* Default text color for the body */
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #141414; /* Matches the dark container background from the image */
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            width: 400px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .container h2 {
+            background-color: #ebe5e5; /* Matches the light grey title box background */
+            color: #131212; /* Dark text for the title */
+            border-radius: 20px;
+            padding: 10px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .password-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .password-box input {
+            padding: 10px;
+            width: 60%;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            background-color: #e5e5e5; /* Matches the light grey input background */
+            color: #2c2c2c; /* Dark text color for the password output */
+            outline: none;
+            text-align: center;
+        }
+
+        .password-box .label {
+            color: #131212; /* Dark text for the "Password" label */
+            font-size: 14px;
+        }
+
+        .password-box button {
+            padding: 10px 20px;
+            border-radius: 10px;
+            background-color: #e5e5e5; /* Matches the light grey button background */
+            border: none;
+            cursor: pointer;
+            color: #131212; /* Dark text for the button */
+            font-weight: bold;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .password-box button:hover {
+            background-color: #d0d0d0;
+            transform: translateY(-1px);
+        }
+
+        .password-box button:active {
+            background-color: #c0c0c0;
+            transform: translateY(0);
+        }
+
+        .settings {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .settings label {
+            font-size: 14px;
+            color: #ffffff; /* White text for labels in settings section */
+        }
+
+        .settings input[type="range"] {
+            width: 100px;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            background: #d4d4d4; /* Light grey for slider track, matching image */
+            outline: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .settings input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3f93e8; /* Blue accent for slider thumb */
+            cursor: grab;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .settings input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3f93e8; /* Blue accent for slider thumb */
+            cursor: grab;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        #lengthValue {
+            color: #eff1f2; /* White/light grey for length value */
+            font-weight: bold;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input {
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #555; /* Checkbox border */
+            border-radius: 4px;
+            background-color: #1c1a1a; /* Dark background for unchecked checkbox */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .checkbox-group input:checked {
+            background-color: #3f93e8; /* Blue accent when checked */
+            border-color: #3f93e8; /* Blue accent border when checked */
+        }
+
+        .checkbox-group input:checked::before {
+            content: '\2713'; /* Checkmark Unicode character */
+            color: white; /* White checkmark, as seen in the image */
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .checkbox-group label {
+            color: white; /* White text for checkbox labels */
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            .container h2 {
+                font-size: 1.5em;
+                margin-bottom: 20px;
+            }
+            .password-box {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .password-box input {
+                width: 80%;
+            }
+            .settings {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            .settings input[type="range"] {
+                width: 80%;
+            }
+            .checkbox-group {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Password Generator</h2>
+        <div class="password-box">
+            <input type="text" id="password" readonly value="LoXrHp7OWuln9WtITU5Yx" />
+            <span class="label">Password</span>
+            <button onclick="copyPassword()">Copy</button>
+        </div>
+        <div class="settings">
+            <label>Length <span id="lengthValue">21</span></label>
+            <input type="range" id="length" min="6" max="32" value="21" />
+            <div class="checkbox-group">
+                <input type="checkbox" id="chars" checked />
+                <label for="chars">Characters</label>
+                <input type="checkbox" id="nums" checked />
+                <label for="nums">Numbers</label>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const passwordField = document.getElementById('password');
+        const lengthSlider = document.getElementById('length');
+        const charsCheck = document.getElementById('chars');
+        const numsCheck = document.getElementById('nums');
+        const lengthValue = document.getElementById('lengthValue');
+
+        function generatePassword() {
+            const length = parseInt(lengthSlider.value);
+            const useChars = charsCheck.checked;
+            const useNums = numsCheck.checked;
+
+            let charset = '';
+            if (useChars) charset += 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            if (useNums) charset += '0123456789';
+
+            if (charset === '') {
+                passwordField.value = 'Select a character set!';
+                return;
+            }
+
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                password += charset.charAt(Math.floor(Math.random() * charset.length));
+            }
+            passwordField.value = password;
+        }
+
+        function copyPassword() {
+            passwordField.select();
+            document.execCommand('copy');
+            alert('Password copied to clipboard!');
+        }
+
+        lengthSlider.addEventListener('input', () => {
+            lengthValue.textContent = lengthSlider.value;
+            generatePassword();
+        });
+
+        charsCheck.addEventListener('change', generatePassword);
+        numsCheck.addEventListener('change', generatePassword);
+
+        generatePassword();
+    </script>
+</body>
+</html>
